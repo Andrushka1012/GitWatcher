@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GitWatcher</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="ReposCount">Repositories</string>
+    <string name="UsersCount">Users</string>
+
+
+
+</resources>
