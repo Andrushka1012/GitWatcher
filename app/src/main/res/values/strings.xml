@@ -4,7 +4,22 @@
 
     <string name="ReposCount">Repositories</string>
     <string name="UsersCount">Users</string>
-
+    <string name="SomeError">Some Error</string>
+    <string name="EmptyDbUsers">You don\'t add any users yet</string>
+    <string name="EmptyDbRepo">You don\'t add any repositories yet</string>
+    <string name="EmptySearch">Search has not given any result</string>
+    <string name="action_search">Search</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="overview">Overview</string>
+    <string name="organizations">Organizations</string>
+    <string name="userPhoto">UserPhoto</string>
+    <string name="noFollowing">No following users</string>
+    <string name="noFollower">No follower users</string>
+    <string name="noRepos">User don\'t have any repositories yet</string>
+    <string name="readme">ReadMe</string>
 
 
 </resources>

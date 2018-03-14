@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="?attr/selectableItemBackground"
     >
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/pgoto"
+        android:id="@+id/photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:paddingBottom="5dp"
-        android:src="@drawable/andrushka_photo"
+        android:src="@color/colorPrimary"
         android:layout_marginStart="10dp" />
     <FrameLayout
         android:layout_width="match_parent"
@@ -24,13 +25,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
-            android:text="Name"
             android:layout_marginStart="10dp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#ffff"
             android:layout_gravity="bottom"
+            android:layout_marginRight="10dp"
             >
         </View>
     </FrameLayout>

@@ -1,9 +1,10 @@
 package com.example.andrii.gitwatcher
 
 import android.app.Application
-import com.example.andrii.gitwatcher.Di.DaggerAppComponent
-import com.example.andrii.gitwatcher.Di.component.AppComponent
-import com.example.andrii.gitwatcher.Di.module.AppModule
+
+import com.example.andrii.gitwatcher.di.component.AppComponent
+import com.example.andrii.gitwatcher.di.component.DaggerAppComponent
+import com.example.andrii.gitwatcher.di.module.AppModule
 import io.realm.Realm
 
 class MyApplication:Application(){
