@@ -13,17 +13,9 @@ abstract class BaseFragment : Fragment(), MVPView{
         if (context is BaseActivity) {
             val activity = context as BaseActivity?
             this.parentActivity = activity
-            parentActivity?.onFragmentAttached(this)
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        parentActivity?.onFragmentAttached(this)
-    }
 
-    interface CallBack {
-        fun onFragmentAttached(fragment: BaseFragment)
-        fun onFragmentDetached(fragment: BaseFragment)
-    }
+
 }

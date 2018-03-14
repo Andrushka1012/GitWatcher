@@ -5,4 +5,21 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="ProfileActivity" parent="AppTheme.NoActionBar">
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/user_photo_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition">@transition/user_photo_transition
+        </item>
+    </style>
+
+    <style name="SearchActivity" parent="AppTheme.NoActionBar">
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+
+    <style name="StartPageActivity" parent="AppTheme.NoActionBar">
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+
 </resources>
