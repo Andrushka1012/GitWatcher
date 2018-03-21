@@ -21,7 +21,7 @@ class RepositoriesListAdapter : RecyclerView.Adapter<MyHolderRepositories>() {
         val repo = mRepositoriesList[position]
         holder!!.bindHolder(repo)
         holder.itemView.setOnClickListener{
-            val intent = RepositoryActivity.newIntent(holder.itemView.context,repo.owner!!.login!!,repo.name!!)
+            val intent = RepositoryActivity.newIntent(holder.itemView.context,repo)
             holder.itemView.context.startActivity(intent)
         }
     }
@@ -60,30 +60,9 @@ class MyHolderRepositories constructor(itemView:View): RecyclerView.ViewHolder(i
         view.name.text = repo.name
         view.stars.text = repo.stargazers_count
         view.share.text = repo.forks_count
+        view.modificated.text = formatData(repo.updated_at)
 
-        val format = SimpleDateFormat("yyyy-MM-dd")
-        val date = format.parse(repo.updated_at!!.substring(0,10))
-        val formatOut = SimpleDateFormat("dd MMM")
-        val d = formatOut.format(date)
-        view.modificated.text = d
-
-
-        var size = repo.size!!.toDouble()
-        var textSize:String
-        when{
-            size<=1000 -> {textSize = "$size B"}
-
-            size in 1000..1000000 -> {
-                size /= 1000
-                textSize = "$size KB"
-            }
-            else -> {
-                size /= 1000000
-                textSize = "$size MB"
-            }
-        }
-        textSize = textSize.substring(0,3) + textSize.substring(textSize.length-3,textSize.length)
-        view.size.text = textSize
+        view.size.text = formatSize(repo.size)
         view.language.text = repo.language
         val color = getColorsMap()[repo.language]
         view.language.setTextColor(ContextCompat.getColor(view.context,color?:R.color.languageOther))
@@ -111,14 +90,27 @@ fun getColorsMap():HashMap<String,Int>{
     return map
 }
 
-/*if (size<1000){
-        textSize = "$size B"
-    }else{
-        if (1000>=size && size<1000000){
-            size /= 1000
-            textSize = "$size KB"
-        }else{
-         size /= 1000000
-            textSize = "$size MB"
+fun formatData(data: String?):String{
+    val format = SimpleDateFormat("yyyy-MM-dd")
+    val date = format.parse(data?.substring(0,10))
+    val formatOut = SimpleDateFormat("dd MMM")
+    return formatOut.format(date)
+}
+
+fun formatSize(size: String?):String{
+    var s = size?.toDouble() ?: 0.0
+    val textSize:String
+    when{
+        s <=1000 -> {textSize = "$size KB"}
+
+        s in 1000..1000000 -> {
+            s /= 1000
+            textSize = "$s MB"
         }
-    }*/
+        else -> {
+            s /= 1000000
+            textSize = "$size GB"
+        }
+    }
+    return textSize.substring(0,3) + textSize.substring(textSize.length-3,textSize.length)
+}

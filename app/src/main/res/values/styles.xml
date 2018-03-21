@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:textColor">@color/colorText</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -24,7 +25,9 @@
 
     <style name="SearchActivity" parent="AppTheme.NoActionBar" />
 
-    <style name="StartPageActivity" parent="AppTheme.NoActionBar" />
+    <style name="StartPageActivity" parent="AppTheme.NoActionBar" >
+
+    </style>
 
 </resources>
 

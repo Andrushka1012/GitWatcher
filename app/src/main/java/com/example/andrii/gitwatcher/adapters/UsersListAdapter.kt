@@ -13,12 +13,12 @@ import com.example.andrii.gitwatcher.tools.ImageTools
 import kotlinx.android.synthetic.main.item_user.view.*
 import java.util.*
 
-class UsersListAdapter constructor(val contex:Activity): RecyclerView.Adapter<MyHolder>() {
+class UsersListAdapter constructor(private val context:Activity): RecyclerView.Adapter<MyHolder>() {
     val mUserList = ArrayList<User>()
 
     override fun onBindViewHolder(holder: MyHolder?, position: Int) {
         val user = mUserList[position]
-        holder!!.bindPhoto(user)
+        holder!!.bindHolder(user)
         holder.itemView.setOnClickListener{
             val intent = ProfileActivity.newIntent(holder.itemView.context,user.login!!)
            /* var bundle:Bundle? = null
@@ -37,7 +37,7 @@ class UsersListAdapter constructor(val contex:Activity): RecyclerView.Adapter<My
             else holder.itemView.context.startActivity(intent,bundle)
             */
 //            (holder.itemView.context as Activity).startActivityForResult(intent,StartPageActivity.START_PAGE_DATA_CHANGED_REQUEST)
-            contex.startActivity(intent)
+            context.startActivity(intent)
         }
     }
 
@@ -67,7 +67,7 @@ class MyHolder constructor(itemView:View): RecyclerView.ViewHolder(itemView){
 
     private var view: View = itemView
 
-    fun bindPhoto(user:User) {
+    fun bindHolder(user:User) {
         view.name.text = user.login
         val tools = ImageTools(view.context)
         tools.downloadUserImage(view.photo,user,false)

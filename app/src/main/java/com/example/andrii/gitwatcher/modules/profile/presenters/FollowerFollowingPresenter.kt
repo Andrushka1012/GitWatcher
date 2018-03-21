@@ -1,13 +1,12 @@
 package com.example.andrii.gitwatcher.modules.profile.presenters
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.andrii.gitwatcher.base.BasePresenter.BasePresenter
 import com.example.andrii.gitwatcher.data.GItHubAPI.GitHubClient
 import com.example.andrii.gitwatcher.data.models.User
 import com.example.andrii.gitwatcher.modules.profile.view.FollowerFollowingFragment
-import com.example.andrii.gitwatcher.modules.profile.view.ProfileActivity
-import com.example.andrii.gitwatcher.modules.profile.view.ProfilePresenter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,21 +14,17 @@ import retrofit2.Retrofit
 
 class FollowerFollowingPresenter:BasePresenter<FollowerFollowingFragment>(){
 
-    var activityPresenter: ProfilePresenter? = null
-
-    override fun onAttach(view: FollowerFollowingFragment?) {
-        super.onAttach(view)
-        activityPresenter = (view?.getParentActivity() as ProfileActivity).getPresenter()
+    companion object {
+        private const val FOLLOWING_SAVED_INSTANCE = "FOLLOWING_SAVED_INSTANCE"
+        private const val FOLLOWERS_SAVED_INSTANCE = "FOLLOWERS_SAVED_INSTANCE"
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        activityPresenter = null
-    }
+    var followers:ArrayList<User>? = null
+    var following:ArrayList<User>? = null
 
-    fun provideFollowers() = activityPresenter?.followers
+    fun provideFollowers() = followers
 
-    fun provideFollowing() = activityPresenter?.following
+    fun provideFollowing() = following
 
 
     fun setupData(retrofit: Retrofit,login:String) {
@@ -49,7 +44,7 @@ class FollowerFollowingPresenter:BasePresenter<FollowerFollowingFragment>(){
 
             override fun onResponse(call: Call<ArrayList<User>>?, response: Response<ArrayList<User>>?) {
                 val list = response?.body()
-                activityPresenter?.saveFollowing(list)
+                following = list
                 getView()!!.setUpRecyclerView(list)
             }
         })
@@ -68,9 +63,21 @@ class FollowerFollowingPresenter:BasePresenter<FollowerFollowingFragment>(){
 
             override fun onResponse(call: Call<ArrayList<User>>?, response: Response<ArrayList<User>>?) {
                 val list = response?.body()
-                activityPresenter?.saveFollowers(list)
+                followers = list
                 getView()!!.setUpRecyclerView(list)
             }
         })
     }
+
+    fun saveInstances(outState: Bundle?) {
+        outState?.putParcelableArrayList(FOLLOWERS_SAVED_INSTANCE,followers)
+        outState?.putParcelableArrayList(FOLLOWING_SAVED_INSTANCE,following)
+    }
+
+    fun loadInstances(outState: Bundle?){
+        following = outState?.getParcelableArrayList(FOLLOWING_SAVED_INSTANCE)
+        followers = outState?.getParcelableArrayList(FOLLOWERS_SAVED_INSTANCE)
+
+    }
+
 }

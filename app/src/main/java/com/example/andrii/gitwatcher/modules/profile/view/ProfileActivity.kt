@@ -7,6 +7,7 @@ import android.view.View
 import com.example.andrii.gitwatcher.R
 import com.example.andrii.gitwatcher.adapters.ViewPagerAdapter
 import com.example.andrii.gitwatcher.base.BaseView.BaseActivity
+import com.example.andrii.gitwatcher.modules.profile.presenters.ProfilePresenter
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
@@ -30,23 +31,18 @@ class ProfileActivity:BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        setupPresenter(savedInstanceState)
+        setupPresenter()
         setupActionBat()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         setupViewPager()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         presenter?.onDetach()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        presenter?.saveInstances(outState)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -64,8 +60,6 @@ class ProfileActivity:BaseActivity(){
         profileProgressBar.visibility = View.GONE
     }
 
-    fun getPresenter() = presenter
-
     private fun setupActionBat() {
         setSupportActionBar(profileToolbar)
         login = intent.getStringExtra(LOGIN_EXTRA)
@@ -74,10 +68,9 @@ class ProfileActivity:BaseActivity(){
 
     }
 
-    private fun setupPresenter(savedInstanceState: Bundle?) {
+    private fun setupPresenter() {
         presenter = ProfilePresenter()
         presenter?.onAttach(this)
-        presenter?.loadInstances(savedInstanceState)
     }
 
     fun scrollToPosition(position:Int){
