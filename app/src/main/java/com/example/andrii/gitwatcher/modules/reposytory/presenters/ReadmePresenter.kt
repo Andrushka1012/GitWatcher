@@ -15,7 +15,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 class ReadmePresenter: BasePresenter<ReadmeFragment>(){
 
     fun setUpData(userLogin: String, repoLogin: String) {
-        Log.d("pizdec", "$userLogin $repoLogin")
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://raw.githubusercontent.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -33,9 +32,7 @@ class ReadmePresenter: BasePresenter<ReadmeFragment>(){
             }
 
             override fun onResponse(call: Call<String>?, response: Response<String>?) {
-                Log.e("pizdec",call.toString()+"  " +response.toString())
-                Log.d("pizdec",response!!.message())
-                val markdown = response.body()
+                val markdown = response?.body()
                 getView()!!.showReadme(markdown)
             }
         })

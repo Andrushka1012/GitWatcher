@@ -53,6 +53,7 @@ class ProfileRepositoriesFragment:ProfileFragment(){
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentRecyclerViewRefresh.isEnabled = false
+        presenter.loadInstances(savedInstanceState)
 
         setupUI()
     }
@@ -62,6 +63,10 @@ class ProfileRepositoriesFragment:ProfileFragment(){
         presenter.onDetach()
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        presenter.saveInstances(outState)
+    }
 
     override fun setupData() {
      presenter.setupData(login,getParentActivity()!!.retrofit)

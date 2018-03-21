@@ -53,6 +53,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.1.0'
     compile "com.andkulikov:transitionseverywhere:1.7.9"
     compile 'com.mittsu:markedview:1.0.5@aar'
-
-
+    compile 'com.github.kbiakov:CodeView-android:1.3.1'
 }

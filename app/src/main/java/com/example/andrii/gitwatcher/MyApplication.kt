@@ -5,6 +5,7 @@ import android.app.Application
 import com.example.andrii.gitwatcher.di.component.AppComponent
 import com.example.andrii.gitwatcher.di.component.DaggerAppComponent
 import com.example.andrii.gitwatcher.di.module.AppModule
+import io.github.kbiakov.codeview.classifier.CodeProcessor
 import io.realm.Realm
 
 class MyApplication:Application(){
@@ -17,6 +18,7 @@ class MyApplication:Application(){
 
     override fun onCreate() {
         super.onCreate()
+        CodeProcessor.init(this);
         Realm.init(this)
         component.inject(this)
     }

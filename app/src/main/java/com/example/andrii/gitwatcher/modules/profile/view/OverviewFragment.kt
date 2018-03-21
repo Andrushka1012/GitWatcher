@@ -57,15 +57,24 @@ class OverviewFragment:ProfileFragment(){
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.loadInstances(savedInstanceState)
         profileFollowing.setOnClickListener { (getParentActivity() as ProfileActivity).scrollToPosition(2) }
         profileFollowers.setOnClickListener { (getParentActivity() as ProfileActivity).scrollToPosition(3) }
+    }
 
+    override fun onResume() {
+        super.onResume()
         setUI()
     }
 
     override fun onDetach() {
         super.onDetach()
         presenter.onDetach()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        presenter.saveInstances(outState)
     }
 
 
@@ -141,7 +150,7 @@ class OverviewFragment:ProfileFragment(){
         val user = presenter.provideUser()
         val organizations = presenter.provideOrganisations()
 
-        if (user == null || organizations == null)setupData()
+        if (user == null || organizations == null) setupData()
         else {
             setUpUserData(user)
             setOrganizations(organizations)

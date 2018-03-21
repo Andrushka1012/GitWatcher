@@ -20,6 +20,6 @@
     <string name="noFollower">No follower users</string>
     <string name="noRepos">User don\'t have any repositories yet</string>
     <string name="readme">ReadMe</string>
-
+    <string name="files">Files</string>
 
 </resources>

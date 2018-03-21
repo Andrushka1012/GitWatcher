@@ -69,6 +69,11 @@ data class User constructor(var id:String?) : Parcelable {
         this.updated_at = updated_at
     }
 
+    constructor(id: String?,login:String?,url:String?) : this(id) {
+        this.login = login
+        this.avatar_url = url
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(login)

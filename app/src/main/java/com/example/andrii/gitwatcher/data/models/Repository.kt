@@ -19,10 +19,8 @@ data class Repository constructor(val id:String?) : Parcelable {
         fun getAllRepositoriesFromRealm(realm: Realm):ArrayList<Repository>{
             val realmResult = realm.where(RepositoryObjectDb::class.java).findAll()
             val list = ArrayList<Repository>()
-            //realmResult.forEach{list+=Repository(it)}
-            //val user = User("1","Andrii","https://avatars0.githubusercontent.com/u/33988987?v=4")
-            //val repository = Repository("1","Repository","325654","Kotlin","15","32","12","15","10 Dec",user)
-            //list.add(repository)
+            realmResult.forEach{list+=Repository(it)}
+
             return list
         }
 
@@ -54,7 +52,16 @@ data class Repository constructor(val id:String?) : Parcelable {
 
 
     constructor(repositoryObject: RepositoryObjectDb?) : this(repositoryObject?.repositoryId) {
-
+        name = repositoryObject?.name
+        size = repositoryObject?.size
+        language = repositoryObject?.language
+        watchers = repositoryObject?.watchers
+        forks_count = repositoryObject?.forks_count
+        open_issues = repositoryObject?.open_issues
+        stargazers_count = repositoryObject?.stargazers_count
+        updated_at = repositoryObject?.updated_at
+        owner = User(repositoryObject?.ownerId,repositoryObject?.ownerLogin,repositoryObject?.ownerUrl)
+        clone_url = repositoryObject?.clone_url
     }
 
     constructor(repositoryId: String?, name: String?, size: String?, language: String?, watchers_count: String?, network_count: String?, open_issues: String?, stargazers_count: String?, updated_at: String?, owner: User?,clone_url:String?) : this(repositoryId) {

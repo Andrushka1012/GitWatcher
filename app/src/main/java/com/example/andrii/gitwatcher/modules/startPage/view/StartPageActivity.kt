@@ -3,6 +3,7 @@ package com.example.andrii.gitwatcher.modules.startPage.view
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import com.example.andrii.gitwatcher.R
 import com.example.andrii.gitwatcher.adapters.ViewPagerAdapter
 import com.example.andrii.gitwatcher.base.BaseView.BaseActivity
@@ -22,6 +23,7 @@ class StartPageActivity : BaseActivity(), StartView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)

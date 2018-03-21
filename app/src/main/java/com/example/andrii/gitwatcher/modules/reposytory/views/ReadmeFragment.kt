@@ -71,7 +71,6 @@ class ReadmeFragment:BaseFragment(){
             md_view.background = activity.getDrawable(R.color.colorBackground)
         }
         md_view.setCodeScrollDisable()
-
     }
 
 }

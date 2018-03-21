@@ -1,5 +1,6 @@
 package com.example.andrii.gitwatcher.modules.profile.presenters
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -9,8 +10,6 @@ import com.example.andrii.gitwatcher.data.GItHubAPI.GitHubClient
 import com.example.andrii.gitwatcher.data.models.Organization
 import com.example.andrii.gitwatcher.data.models.User
 import com.example.andrii.gitwatcher.modules.profile.view.OverviewFragment
-import com.example.andrii.gitwatcher.modules.profile.view.ProfileActivity
-import com.example.andrii.gitwatcher.modules.profile.view.ProfilePresenter
 import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,26 +17,22 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class OverviewFragmentPresenter:BasePresenter<OverviewFragment>(){
-    var activityPresenter:ProfilePresenter? = null
 
-    override fun onAttach(view: OverviewFragment?) {
-        super.onAttach(view)
-        activityPresenter = (view?.getParentActivity() as ProfileActivity).getPresenter()
+    companion object {
+        private val USER_SAVED_INSTANCE = "USER_SAVED_INSTANCE"
+        private val ORGANIZATION_SAVED_INSTANCE = "ORGANIZATION_SAVED_INSTANCE"
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        activityPresenter = null
-    }
+    var user:User? = null
+    var organizations:ArrayList<Organization>? = null
 
     fun provideUser(): User? {
-        return activityPresenter?.user
+        return user
     }
 
     fun provideOrganisations(): ArrayList<Organization>? {
-        return activityPresenter?.organizations
+        return organizations
     }
-
 
     fun loadData(login: String, retrofit: Retrofit) {
         val client = retrofit.create(GitHubClient::class.java)
@@ -50,9 +45,8 @@ class OverviewFragmentPresenter:BasePresenter<OverviewFragment>(){
             }
 
             override fun onResponse(call: Call<User>?, response: Response<User>?) {
-                Log.d("pizdec",response!!.message())
-                val user = response.body()
-                activityPresenter?.saveOverviewPersonData(user)
+                val u = response?.body()
+                user = u
                 getView()!!.setUpUserData(user)
             }
         })
@@ -65,15 +59,12 @@ class OverviewFragmentPresenter:BasePresenter<OverviewFragment>(){
             }
 
             override fun onResponse(call: Call<ArrayList<Organization>>?, response: Response<ArrayList<Organization>>?) {
-                Log.d("pizdec",response!!.message())
                 val list = response?.body()
-                activityPresenter?.saveOverViewOrganizations(list)
+                organizations = list
                 getView()!!.setOrganizations(list)
             }
         })
-
     }
-
 
     fun followUnfollowOnClick(realm: Realm, profileFollowUnfollowBtn: Button?, user: User) {
         profileFollowUnfollowBtn!!.setOnClickListener {
@@ -92,5 +83,16 @@ class OverviewFragmentPresenter:BasePresenter<OverviewFragment>(){
             getView()!!.chaneButtonText()
         }
     }
+
+    fun saveInstances(outState: Bundle?) {
+        outState?.putParcelable(USER_SAVED_INSTANCE,user)
+        outState?.putParcelableArrayList(ORGANIZATION_SAVED_INSTANCE,organizations)
+
+    }
+    fun loadInstances(outState: Bundle?){
+        user = outState?.getParcelable(USER_SAVED_INSTANCE)
+        organizations = outState?.getParcelableArrayList(ORGANIZATION_SAVED_INSTANCE)
+    }
+
 
 }
